@@ -7,10 +7,15 @@ module ChinaSMS
       extend self
 
       URL = "http://tui3.com/api/send/"
+      CODE_URL = "http://tui3.com/api/code/"
 
       def to(phone, content, options)
         phones = Array(phone).join(',')
-        res = Net::HTTP.post_form(URI.parse(URL), k: options[:password], t: phones, c: content, p: 1, r: 'json')
+        if options.has_key?(:tpl_id)
+          res = Net::HTTP.post_form(URI.parse(CODE_URL), k: options[:password], t: phones, c: content, p: 1, r: 'json', ti: options[:tpl_id])
+        else
+          res = Net::HTTP.post_form(URI.parse(URL), k: options[:password], t: phones, c: content, p: 1, r: 'json')
+        end
         body = res.body
         body = "{\"err_code\": 2, \"err_msg\":\"非法apikey:#{options[:password]}\"}" if body == 'invalid parameters'
         result JSON[body]
