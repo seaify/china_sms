@@ -34,7 +34,9 @@
 ```ruby
 # 支持 :tui3, :yunpian, :smsbao, :chanyoo, :emay, luosimao  短信接口
 ChinaSMS.use :tui3, username: 'YOUR_USERNAME', password: 'YOUR_PASSWORD'
-ChinaSMS.to '13912345678', '[Test]China SMS gem has been released.'
+ChinaSMS.to '13912345678', '推立方测试, 天气不错'
+# 发送验证码，需要带上参数tpl_id，表示模板id, 即ti
+ChinaSMS.to '13912345678', '8888', tpl_id: 1
 
 
 # :yunpian
